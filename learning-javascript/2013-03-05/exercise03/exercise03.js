@@ -9,7 +9,7 @@ for(var i=1; i<=10; i++){
 			n=0;
 		};
 		if (j===1){
-			riga=n + ',';
+			riga=n;
 		}else{
 		riga=riga + ',\t' + n;
 		};
