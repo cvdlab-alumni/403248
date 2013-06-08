@@ -37,6 +37,7 @@ var contHouseY=2;
 
 //boolean variables
 var foundLake;
+var treeRnd;
 var foundSettlement1 = false;
 var foundSettlement2 = false;
 
@@ -44,7 +45,7 @@ var foundSettlement2 = false;
 var forest=[];
 
 //number of trees
-var cont=50;
+var cont=100;
 
 
 /*      SETTLEMENT FUNCTION
@@ -75,7 +76,7 @@ function houseDrawRandom(x,y,z){
     single_house = R([1,2])([PI/2])(EXTRUDE([y])(single_house));
     return rgb(255,255,224)(single_house);
 }
-}
+
 // draw the lake
 function lakeDraw(x,y,z){
     return rgb(0,191,255)(CUBOID([x,y,z]));
@@ -119,7 +120,12 @@ function mapping1(x,y){
                                 var y = v[1];
                                 var z = Math.abs(SIN(x) + SIN(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var alberoRandom=Math.round(Math.random());
+                                var treeRandom=Math.round(8*Math.random());
+                                if (treeRandom===0){
+                                    treeRnd=true;
+                                }
+                                else
+                                    treeRnd=false;
                                 var m = [x,y,z];
                                         if(z<0.2){
                                                 m = [x,y,0];
@@ -130,7 +136,7 @@ function mapping1(x,y){
                                              dYlake=y;
                                              lake=T([0,1])([dXlake,dYlake])(lakeDraw(xLake,yLake,zLake));
                                         }
-                                        if(y>2 && x<2 && 1<z && cont>0 && alberoRandom){
+                                        if(y>2 && 1<z && cont>0 && treeRnd){
                                             cont--;
                                             forest.push(T([0,1,2])([x,y,z])(treeDrawRandom(0.015,0.06,0.04,0.1,12)));
                                         }
@@ -159,7 +165,12 @@ function mapping2(x,y){
                                 var y = v[1];
                                 var z = Math.abs(COS(x) + COS(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var alberoRandom=Math.round(Math.random());
+                                var treeRandom=Math.round(8*Math.random());
+                                if (treeRandom===0){
+                                    treeRnd=true;
+                                }
+                                else
+                                    treeRnd=false;
                                 var m = [x,y,z];
                                         if(z<0.2){
                                                 m=[x,y,0];
@@ -170,7 +181,7 @@ function mapping2(x,y){
                                              dYlake=y;
                                              lake=T([0,1])([dXlake,dYlake])(lakeDraw(xLake,yLake,zLake));
                                         }
-                                        if(y>2 && x<2 && 1<z && cont>0 && alberoRandom){
+                                        if(y>2 && 1<z && cont>0 && treeRnd){
                                             cont--;
                                             forest.push(T([0,1,2])([x,y,z])(treeDrawRandom(0.015,0.06,0.04,0.1,12)));
                                         }
@@ -199,7 +210,12 @@ function mapping3(x,y){
                                 var y = v[1];
                                 var z = Math.abs(SIN(x) + COS(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var alberoRandom=Math.round(Math.random());
+                                var treeRandom=Math.round(8*Math.random());
+                                if (treeRandom===0){
+                                    treeRnd=true;
+                                }
+                                else
+                                    treeRnd=false;
                                 var m = [x,y,z];
                                         if(z<0.2){
                                                 m = [x,y,0];
@@ -210,7 +226,7 @@ function mapping3(x,y){
                                              dYlake=y;
                                              lake=T([0,1])([dXlake,dYlake])(lakeDraw(xLake,yLake,zLake));
                                         }
-                                        if(y>2 && x<2 && 1<z && cont>0 && alberoRandom){
+                                        if(y>2 && 1<z && cont>0 && treeRnd){
                                             cont--;
                                             forest.push(T([0,1,2])([x,y,z])(treeDrawRandom(0.015,0.06,0.04,0.1,12)));
                                         }
@@ -239,7 +255,12 @@ function mapping4(x,y){
                                 var y = v[1];
                                 var z = Math.abs(COS(x) + SIN(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var alberoRandom=Math.round(Math.random());
+                                var treeRandom=Math.round(8*Math.random());
+                                if (treeRandom===0){
+                                    treeRnd=true;
+                                }
+                                else
+                                    treeRnd=false;
                                 var m = [x,y,z];
                                         if(z<0.2){
                                                 m = [x,y,0];
@@ -250,7 +271,7 @@ function mapping4(x,y){
                                                 dYlake=y;
                                                 lake=T([0,1])([dXlake,dYlake])(lakeDraw(xLake,yLake,zLake));
                                         }
-                                         if(y>2 && x<2 && 1<z && cont>0 && alberoRandom){
+                                         if(y>2 && 1<z && cont>0 && treeRnd){
                                             cont--;
                                             forest.push(T([0,1,2])([x,y,z])(treeDrawRandom(0.015,0.06,0.04,0.1,12)));
                                         }

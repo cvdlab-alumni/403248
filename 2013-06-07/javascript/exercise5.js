@@ -45,7 +45,7 @@ var treeRnd;
 var forest=[];
 
 //number of trees
-var cont=100;
+var cont=150;
 
 
 /*      SETTLEMENT FUNCTION
@@ -195,7 +195,7 @@ function mapping1(x,y){
                                 var y = v[1];
                                 var z = Math.abs(SIN(x) + SIN(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var treeRandom=Math.round(8*Math.random());
+                                var treeRandom=Math.round(6*Math.random());
                                 if (treeRandom===0){
                                     treeRnd=true;
                                 }
@@ -240,7 +240,7 @@ function mapping2(x,y){
                                 var y = v[1];
                                 var z = Math.abs(COS(x) + COS(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var treeRandom=Math.round(8*Math.random());
+                                var treeRandom=Math.round(6*Math.random());
                                  if (treeRandom===0){
                                     treeRnd=true;
                                 }
@@ -285,7 +285,7 @@ function mapping3(x,y){
                                 var y = v[1];
                                 var z = Math.abs(SIN(x) + COS(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var treeRandom=Math.round(8*Math.random());
+                                var treeRandom=Math.round(6*Math.random());
                                  if (treeRandom===0){
                                     treeRnd=true;
                                 }
@@ -330,7 +330,7 @@ function mapping4(x,y){
                                 var y = v[1];
                                 var z = Math.abs(COS(x) + SIN(y) +(0.1*Math.random()-0.1));
                                 var lakeRandom=Math.round(Math.random());
-                                var treeRandom=Math.round(8*Math.random());
+                                var treeRandom=Math.round(6*Math.random());
                                  if (treeRandom===0){
                                     treeRnd=true;
                                 }
