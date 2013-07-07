@@ -23,6 +23,39 @@ function supHermite(controlPoints1,controlPoints2,t1,t2){
     return MAP(funCur)(domainSurface)
   }
 
+function creaToro(R,r){
+  var domain = DOMAIN([[0,2*PI],[0,2*PI]])([36,72])
+  function torus(R,r){
+    return function(v){
+        var a = v[0];
+        var b = v[1];
+        var u = (r * COS(a) + R) * COS(b);
+        var v = (r * COS(a) + R) * SIN(b);
+        var w = (r * SIN(a));
+        return [u,v,w];
+    }
+  }
+  var mapping = torus(R,r);
+  return MAP(mapping)(domain);
+}
+
+function cylinder(r,h,dom) {
+    var cyl = EXTRUDE([h])(DISK([r])(dom))
+    return cyl;
+  };
+
+function annulus_sector (alpha, r, R) {
+  var domain = DOMAIN([[0,alpha],[r,R]])([36,1]);
+  var mapping = function (v) {
+    var a = v[0];
+    var r = v[1];
+    
+    return [r*COS(a), r*SIN(a)];
+  }
+  var model = MAP(mapping)(domain);
+  return model;
+}
+
 function supHermiteFun(curve1,curve2,t1,t2){
     var domainSurface=DOMAIN([[0,1],[0,1]])([12,12]); 
     var funCur = CUBIC_HERMITE(S1)([curve1,curve2,t1,t2])
@@ -527,7 +560,7 @@ sedileDietro=rgb(139,69,19)(T([0,1,2])([14,1.5,-14])(S([0,1,2])([1,0.9,2.15])(se
 
 sedili=STRUCT([sottoSedileA,sottoSedileB,sedileCuscinoA,sedileCuscinoB,sedileDietro])
 
-interns=STRUCT([sedili,internsSup])
+
 
 
 
@@ -771,6 +804,40 @@ paraurtiFront=paraurti("davanti");
 paraurtiRetro=paraurti("dietro");
 paraurtiS=STRUCT([paraurtiFront,paraurtiRetro])
 
+//steering wheel
+function steeringWheel(){
+    internalDisk=T([2])([1.5])(cylinder(1.1,3.5,12))
+    overInternalDisk=DISK([0.9])(12)
+    externalTorus=creaToro(5,0.5)
+    logoDisk=annulus_sector(2*PI, 0.9, 1)
+
+    p1=[[5,1,-0.3],[0.5,0.5,1.8],[0,-2,0],[-1,1,0]]
+    p2=[[5,1,0.3],[0.8,0.5,2.4],[0,-2,0],[-1,1,0]]
+    p3=[[5,-1,-0.3],[0.5,-0.5,1.8],[0,2,0],[-1,-1,0]]
+    p4=[[5,-1,0.3],[0.8,-0.5,2.4],[0,2,0],[-1,-1,0]]
+
+    p5=[[-5,1,-0.3],[-0.5,0.5,1.8],[0,-2,0],[1,1,0]]
+    p6=[[-5,1,0.3],[-0.8,0.5,2.4],[0,-2,0],[1,1,0]]
+    p7=[[-5,-1,-0.3],[-0.5,-0.5,1.8],[0,2,0],[1,-1,0]]
+    p8=[[-5,-1,0.3],[-0.8,-0.5,2.4],[0,2,0],[1,-1,0]]
+
+    sup1=supHermite(p1,p2,[0,0,0],[0,0,0])
+    sup2=supHermite(p3,p4,[0,0,0],[0,0,0])
+    sup3=supHermite(p1,p3,[0,0,0],[0,0,0])
+    sup4=supHermite(p2,p4,[0,0,0],[0,0,0])
+
+    sup5=supHermite(p5,p6,[0,0,0],[0,0,0])
+    sup6=supHermite(p7,p8,[0,0,0],[0,0,0])
+    sup7=supHermite(p5,p7,[0,0,0],[0,0,0])
+    sup8=supHermite(p6,p8,[0,0,0],[0,0,0])
+
+    model=rgb(210,180,140)(STRUCT([externalTorus,internalDisk,sup1,sup2,sup3,sup4,sup5,sup6,sup7,sup8]))
+    logo=T([2])([1.49])(STRUCT([rgb(0,0,0)(overInternalDisk),rgb(192,192,192)(logoDisk)]))
+   return R([0,1])([PI/10])(R([0,2])([-PI/2])(STRUCT([model,logo])))
+}
+
+steeringW=T([0,1,2])([-10.3,14.5,5])(S([0,1,2])([0.6,0.6,0.6])(steeringWheel()))
+
 //assemblaggio
 sportelli=STRUCT([sportelloA,sportelloB])
 windows=rgb(106,18,30)(STRUCT([windowsDietro,lunotto,parabrezza,sportelli,finFDAsup,finFDBsup]))
@@ -778,10 +845,11 @@ vetri=rgba(200,200,200,0.5)(STRUCT([vetroFDA,vetroFDB,vetroLunotto,vetroFinDietr
 contours=rgb(220,220,220)(STRUCT([curva19A,curva21A,curva22A,curva19B,curva21B,curva22B,curveFinDietroA,curveFinDietroB,parabrezzaCurve,finCurveLunotto,finFDAcurve,finFDBcurve]))
 sotto=rgb(189,183,107)(STRUCT([surfaceRetro,surfaceCC]))
 externs=STRUCT([windows,vetri,contours])
+interns=STRUCT([sedili,internsSup,steeringW])
 particulars=STRUCT([fari,maniglie,paratargaRetro,paraurtiS])
 
 //================================== MODEL =====================================
-model=STRUCT([sideA,sideB,retro,fronte,sotto,pneumatics,roof,interns,externs,particulars])
+model=STRUCT([sideA,sideB,retro,fronte,sotto,pneumatics,roof,externs,particulars])
 DRAW(model)
 //================================== MODEL =====================================
 
